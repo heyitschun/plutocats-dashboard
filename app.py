@@ -97,7 +97,12 @@ app.layout = dbc.Container([
     html.Hr(),
 
     dbc.Row([
-        html.Div("Keep this site alive:", className="text-center"),
+        html.Div("Tag me in the Plutocats Discord for suggestions:", className="text-center"),
+        html.Div("@zkchun", className="text-center")
+    ]),
+
+    dbc.Row([
+        html.Div("Keep this site alive:", className="text-center mt-3"),
         html.Div("0x732b964599313Df7E7Cc0222d6502f1150749f33", className="text-center")
     ]),
 
