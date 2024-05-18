@@ -6,6 +6,10 @@ def update_book_value():
     book_value = get_book_per_cat()
     return format_to_eth_string(book_value)
 
+def update_book_royalties():
+    quit_plus = get_quit_plus_royalties()
+    return format_to_eth_string(quit_plus)
+
 def update_mint_price():
     price_wei = get_price()
     return format_to_eth_string(price_wei)
@@ -37,6 +41,7 @@ def register_callbacks(app):
     @app.callback(
         [
             Output("book-value-label", "children"),
+            Output("quit-royalties-label", "children"),
             Output("mint-price-label", "children"),
             Output("current-reserves-label", "children"),
             Output("circulating-supply-label", "children"),
@@ -49,6 +54,7 @@ def register_callbacks(app):
     def update_stat_elements(n):
         return (
             update_book_value(),
+            update_book_royalties(),
             update_mint_price(),
             update_current_reserves(),
             update_circulating_supply(),

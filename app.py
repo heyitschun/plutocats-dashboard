@@ -9,6 +9,7 @@ from helpers import *
 from contracts import *
 from constants import *
 from callbacks import register_callbacks
+from components.footer import footer
 
 
 # Initialize the app - incorporate a Dash Bootstrap theme
@@ -49,8 +50,12 @@ app.layout = dbc.Container([
         ]),
         dbc.Col([
             dbc.Row([
-                html.Div("Book Value per Cat", className=styles.stat_label),
+                html.Div("Quit Price", className=styles.stat_label),
                 html.Div("0.0", className=styles.stat_value, id="book-value-label")
+            ]),
+            dbc.Row([
+                html.Div("Quit + Royalties", className=styles.stat_label),
+                html.Div("0.0", className=styles.stat_value, id="quit-royalties-label")
             ]),
             dbc.Row([
                 html.Div("Mint Premium (ETH)", className=styles.stat_label),
@@ -71,14 +76,18 @@ app.layout = dbc.Container([
 
     html.Hr(),
 
-    html.Footer([
-        html.Div("Discord for suggestions:", className="text-center"),
-        html.Div("@zkchun", className="text-center"),
-        html.Div([
-            html.Div("Keep this site alive:", className="text-center mt-3"),
-            html.Div("0x732b964599313Df7E7Cc0222d6502f1150749f33", className="text-center")
-        ])
-    ])
+    html.Hr(),
+
+    # dbc.Col([
+    #     html.Div("Target Supply", className=styles.stat_label),
+    #     dcc.Input(
+    #         id="vrgda_supply_input",
+    #         type=ALLOWED_TYPES_NUM,
+    #         min=0
+    #     ),
+    # ]),
+
+    footer
 
 ], fluid=True)
 
