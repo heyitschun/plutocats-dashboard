@@ -17,6 +17,8 @@ external_stylesheets = [dbc.themes.MORPH]
 app = Dash(__name__, external_stylesheets=external_stylesheets)
 app.title = "Plutostats - A Plutocats Dashboard"
 
+server = app.server
+
 # App layout
 app.layout = dbc.Container([
     dbc.Row([
