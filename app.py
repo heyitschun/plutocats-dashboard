@@ -10,6 +10,7 @@ from contracts import *
 from constants import *
 from callbacks import register_callbacks
 from components.footer import footer
+from components.mint_chart import historical_mints
 
 
 # Initialize the app - incorporate a Dash Bootstrap theme
@@ -75,6 +76,8 @@ app.layout = dbc.Container([
     ),
 
     html.Hr(),
+
+    historical_mints,
 
     html.Hr(),
 

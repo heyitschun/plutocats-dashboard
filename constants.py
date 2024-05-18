@@ -8,3 +8,5 @@ BLAST_RPC_URLS = [
     "https://blast.din.dev/rpc",
     "https://blast.blockpi.network/v1/rpc/public"
 ]
+START_BLOCK = 817948
+START_TIME = 1710445629
