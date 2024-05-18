@@ -1,21 +1,22 @@
-# Import packages
-import requests
-from dash import Dash, html, dash_table, dcc, callback, Output, Input
-import pandas as pd
-import plotly.express as px
+from dash import Dash, html, dcc
+# import pandas as pd
+# import plotly.express as px
 import dash_bootstrap_components as dbc
 
+import styles
 from catstats import *
 from helpers import *
 from contracts import *
 from constants import *
-import styles
+from callbacks import register_callbacks
 
 
 # Initialize the app - incorporate a Dash Bootstrap theme
 external_stylesheets = [dbc.themes.MORPH]
 app = Dash(__name__, external_stylesheets=external_stylesheets)
 app.title = "Plutostats - A Plutocats Dashboard"
+
+register_callbacks(app)
 
 server = app.server
 
@@ -34,12 +35,16 @@ app.layout = dbc.Container([
                 html.Div("0.0", className=styles.stat_value, id="current-reserves-label")
             ]),
             dbc.Row([
-                html.Div("Circulating Cats", className=styles.stat_label),
+                html.Div("Circulating Supply", className=styles.stat_label),
                 html.Div("0.0", className=styles.stat_value, id="circulating-supply-label")
             ]),
             dbc.Row([
                 html.Div("Mint Price", className=styles.stat_label),
                 html.Div("0.0", className=styles.stat_value, id="mint-price-label")
+            ]),
+            dbc.Row([
+                html.Div("Market Price", className=styles.stat_label),
+                html.Div("0.0", className=styles.stat_value, id="market-price-label")
             ]),
         ]),
         dbc.Col([
@@ -59,105 +64,23 @@ app.layout = dbc.Container([
     ]),
 
     dcc.Interval(
-            id="datatable-interval",
-            interval=1*DELAY, # in milliseconds
-            n_intervals=0
-    ),
-    dcc.Interval(
-            id="book-value-interval",
-            interval=1*DELAY, # in milliseconds
-            n_intervals=0
-    ),
-    dcc.Interval(
-            id="current-reserves-interval",
-            interval=1*DELAY, # in milliseconds
-            n_intervals=0
-    ),
-    dcc.Interval(
-            id="circulating-supply-interval",
-            interval=1*DELAY, # in milliseconds
-            n_intervals=0
-    ),
-    dcc.Interval(
-            id="mint-price-interval",
-            interval=1*DELAY, # in milliseconds
-            n_intervals=0
-    ),
-    dcc.Interval(
-            id="premium-eth-interval",
-            interval=1*DELAY, # in milliseconds
-            n_intervals=0
-    ),
-    dcc.Interval(
-            id="premium-percent-interval",
-            interval=1*DELAY, # in milliseconds
-            n_intervals=0
+        id="combined-interval",
+        interval=1*DELAY,
+        n_intervals=0
     ),
 
     html.Hr(),
 
-    dbc.Row([
-        html.Div("Tag me in the Plutocats Discord for suggestions:", className="text-center"),
-        html.Div("@zkchun", className="text-center")
-    ]),
-
-    dbc.Row([
-        html.Div("Keep this site alive:", className="text-center mt-3"),
-        html.Div("0x732b964599313Df7E7Cc0222d6502f1150749f33", className="text-center")
-    ]),
+    html.Footer([
+        html.Div("Discord for suggestions:", className="text-center"),
+        html.Div("@zkchun", className="text-center"),
+        html.Div([
+            html.Div("Keep this site alive:", className="text-center mt-3"),
+            html.Div("0x732b964599313Df7E7Cc0222d6502f1150749f33", className="text-center")
+        ])
+    ])
 
 ], fluid=True)
-
-
-@callback(
-    Output("book-value-label", "children"),
-    Input("book-value-interval", "n_intervals")
-)
-def update_book_value(n):
-    book_value = get_book_per_cat()
-    return format_to_eth_string(book_value)
-
-@callback(
-    Output("mint-price-label", "children"),
-    Input("mint-price-interval", "n_intervals")
-)
-def update_mint_price(n):
-    price_wei = get_price()
-    return format_to_eth_string(price_wei)
-
-@callback(
-    Output("current-reserves-label", "children"),
-    Input("current-reserves-interval", "n_intervals")
-)
-def update_current_reserves(n):
-    current_reserve = get_current_reserve()
-    return format_to_eth_string(current_reserve)
-
-@callback(
-    Output("circulating-supply-label", "children"),
-    Input("circulating-supply-interval", "n_intervals")
-)
-def update_circulating_supply(n):
-    current_supply = get_adjusted_total_supply()
-    return current_supply
-
-@callback(
-    Output("premium-eth-label", "children"),
-    Input("premium-eth-interval", "n_intervals")
-)
-def update_premium_eth(n):
-    premium = get_price() - get_book_per_cat()
-    return format_to_eth_string(premium)
-
-@callback(
-    Output("premium-percent-label", "children"),
-    Input("premium-percent-interval", "n_intervals")
-)
-def update_premium_percent(n):
-    book = get_book_per_cat()
-    premium = get_price() - book
-    premium_percent = f"{premium/book * 100:.2f}%"
-    return premium_percent
 
 # Run the app
 if __name__ == '__main__':
