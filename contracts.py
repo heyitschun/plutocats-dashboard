@@ -1,14 +1,11 @@
 import json
 import os
-from web3 import Web3
-from dotenv import dotenv_values, load_dotenv
+from dotenv import load_dotenv
 from client import client
 
 if os.getenv('FLASK_ENV') == 'development':
     from dotenv import load_dotenv
     load_dotenv()
-
-config = dotenv_values(".env")
 
 CATS_CONTRACT = os.getenv("CATS_CONTRACT")
 CATS_RESERVE = os.getenv("CATS_RESERVE")
