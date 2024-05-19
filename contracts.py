@@ -1,6 +1,6 @@
 import json
 from client import client
-from env_vars import *
+from constants import *
 
 with open("./PlutocatsTokenABI.json", "r") as f:
     PLUTOCATS_ABI = json.loads(f.read())

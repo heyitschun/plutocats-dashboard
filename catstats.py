@@ -2,7 +2,7 @@ from contracts import contract
 from client import client
 from helpers import *
 from urls import parse_token_url
-from env_vars import *
+from constants import *
 import requests
 
 def get_sold():
