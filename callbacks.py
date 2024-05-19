@@ -29,7 +29,7 @@ def update_premium_eth():
 def update_premium_percent():
     book = get_book_per_cat()
     premium = get_price() - book
-    premium_percent = f"{premium/book * 100:.2f}%"
+    premium_percent = f"{premium/book * 100:,.2f}%"
     return premium_percent
 
 def update_market_price():
@@ -37,7 +37,6 @@ def update_market_price():
     return market_price
 
 def register_callbacks(app):
-    
     @app.callback(
         [
             Output("book-value-label", "children"),

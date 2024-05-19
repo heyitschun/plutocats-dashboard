@@ -16,3 +16,9 @@ def block_timestamp():
     block = client.eth.get_block(block_number)
     ts = block.timestamp
     return ts
+
+##############
+### Format ###
+
+def format_to_eth_string(ether):
+    return f"{to_eth(ether):,.3f} ETH"

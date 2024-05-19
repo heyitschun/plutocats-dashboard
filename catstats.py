@@ -44,6 +44,3 @@ def get_quit_plus_royalties():
 def get_price():
     price_wei = contract.functions.getPrice().call()
     return price_wei
-
-def format_to_eth_string(ether):
-    return f"{to_eth(ether)} ETH"
