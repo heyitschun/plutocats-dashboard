@@ -8,7 +8,6 @@ from contracts import *
 from constants import *
 from callbacks import register_callbacks
 from components.header import header
-from components.trackers import trackers
 from components.footer import footer
 from components.mint_chart import historical_mints
 

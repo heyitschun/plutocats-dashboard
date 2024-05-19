@@ -14,9 +14,3 @@ header = html.Header([
     ], 
     className="d-flex justify-content-between"
 )], className="my-3")
-
-
-# dbc.Row([
-#     dbc.Col(html.H1("Title"), width="auto"),
-#     dbc.Col(html.Label("Label", className="ml-auto"), width="auto"),
-# ],align="center"),

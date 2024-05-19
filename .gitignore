@@ -1,7 +1,8 @@
 venv
 *.pyc
 *.ipynb
-__pycache__
+.ipynb_checkpoints/
+__pycache__/
 .DS_STORE
 .env
 notes.md
