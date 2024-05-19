@@ -1,6 +1,4 @@
 from dash import Dash, html, dcc
-# import pandas as pd
-# import plotly.express as px
 import dash_bootstrap_components as dbc
 
 import styles
@@ -9,12 +7,14 @@ from helpers import *
 from contracts import *
 from constants import *
 from callbacks import register_callbacks
+from components.header import header
+from components.trackers import trackers
 from components.footer import footer
 from components.mint_chart import historical_mints
 
 
 # Initialize the app - incorporate a Dash Bootstrap theme
-external_stylesheets = [dbc.themes.MORPH]
+external_stylesheets = [dbc.themes.MORPH, dbc.icons.BOOTSTRAP]
 app = Dash(__name__, external_stylesheets=external_stylesheets)
 app.title = "Plutostats - A Plutocats Dashboard"
 
@@ -24,9 +24,7 @@ server = app.server
 
 # App layout
 app.layout = dbc.Container([
-    dbc.Row([
-        html.Div('Plutostats', className="text-info fw-bold text-center fs-3 my-4")
-    ]),
+    header,
 
     html.Hr(className="border border-dark"),
 
@@ -80,15 +78,6 @@ app.layout = dbc.Container([
     historical_mints,
 
     html.Hr(),
-
-    # dbc.Col([
-    #     html.Div("Target Supply", className=styles.stat_label),
-    #     dcc.Input(
-    #         id="vrgda_supply_input",
-    #         type=ALLOWED_TYPES_NUM,
-    #         min=0
-    #     ),
-    # ]),
 
     footer
 
