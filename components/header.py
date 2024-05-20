@@ -1,10 +1,11 @@
 from dash import html
 import dash_bootstrap_components as dbc
+import styles
 
 header = html.Header([    
     dbc.Row([
         dbc.Col(
-            html.Div("Plutostats", className="text-info fs-4 fw-bold"), width="auto"
+            html.Div("Plutostats", className=styles.header_left), width="auto"
         ),
         dbc.Col(
             html.A(

@@ -25,8 +25,6 @@ server = app.server
 app.layout = dbc.Container([
     header,
 
-    html.Hr(className="border border-dark"),
-
     dbc.Row([
         dbc.Col([
             dbc.Row([
@@ -71,8 +69,6 @@ app.layout = dbc.Container([
         interval=1*DELAY,
         n_intervals=0
     ),
-
-    html.Hr(),
 
     historical_mints,
 
