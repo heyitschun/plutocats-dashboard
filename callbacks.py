@@ -1,6 +1,10 @@
+import requests
+import pandas as pd
+import plotly.express as px
 from dash.dependencies import Input, Output
 from catstats import *
 from scraper import *
+from urls import parse_normal_transations_url
 
 def update_book_value():
     book_value = get_book_per_cat()
@@ -36,6 +40,45 @@ def update_market_price():
     market_price = get_market_floor()
     return market_price
 
+def fetch_latest_txns_from_api(df):
+    txns = []
+    max_block_number = df['blockNumber'].max() + 1
+    url = parse_normal_transations_url(CATS_CONTRACT, max_block_number, 1)
+    response = requests.get(url)
+    if response.status_code != 200:
+        print(f"Failed to fetch data: {response.status_code}")
+        return None
+    data = response.json()
+    
+    if data["result"] == None or data["result"] == []:
+        print("No transactions found")
+        return None
+    
+    txns.extend(data["result"])
+    txns_df = pd.DataFrame(txns)
+    txns_df = txns_df[txns_df["functionName"] == "mint()"][["blockNumber", "timeStamp", "value", "functionName"]].copy()
+    txns_df["value"] = pd.to_numeric(txns_df["value"], errors='coerce').fillna(0).astype(int)
+    txns_df["blockNumber"] = pd.to_numeric(txns_df["blockNumber"], errors='coerce').fillna(0).astype(int)
+    txns_df["value"] = txns_df["value"].apply(to_eth)
+    txns_df = txns_df.sort_values("blockNumber", ascending=True)
+    return txns_df
+
+def update_mint_chart():
+    df = pd.read_csv("./historical_mints.csv")
+    new_df = fetch_latest_txns_from_api(df)
+    df = pd.concat([df, new_df], ignore_index=True)
+    df = df.sort_values(by="blockNumber", ascending=True)
+    df = df.reset_index(drop=True)
+    df.to_csv("./historical_mints.csv", index=False)
+
+    fig = px.line(df, x="blockNumber", y="value")
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)"
+    )
+
+    return fig
+
 def register_callbacks(app):
     @app.callback(
         [
@@ -46,7 +89,8 @@ def register_callbacks(app):
             Output("circulating-supply-label", "children"),
             Output("premium-eth-label", "children"),
             Output("premium-percent-label", "children"),
-            Output("market-price-label", "children")
+            Output("market-price-label", "children"),
+            Output("historical-mint-chart", "figure")
         ],
         [Input("combined-interval", "n_intervals")]
     )
@@ -59,5 +103,6 @@ def register_callbacks(app):
             update_circulating_supply(),
             update_premium_eth(),
             update_premium_percent(),
-            update_market_price()
+            update_market_price(),
+            update_mint_chart()
         )

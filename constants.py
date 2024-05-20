@@ -1,7 +1,7 @@
 ALLOWED_TYPES_NUM = ("number")
 ALLOWED_TYPES_DATE = ("text")
 
-DELAY = 5000
+DELAY = 10000
 
 BLAST_RPC_URLS = [
     "https://rpc.blast.io",
