@@ -1,6 +1,8 @@
 ALLOWED_TYPES_NUM = ("number")
 ALLOWED_TYPES_DATE = ("text")
 
+REPO_URL = "https://github.com/heyitschun/plutocats-dashboard"
+
 DELAY = 10000
 
 BLAST_RPC_URLS = [

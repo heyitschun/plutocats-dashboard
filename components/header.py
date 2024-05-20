@@ -1,6 +1,7 @@
 from dash import html
 import dash_bootstrap_components as dbc
 import styles
+from constants import REPO_URL
 
 header = html.Header([    
     dbc.Row([
@@ -9,7 +10,7 @@ header = html.Header([
         ),
         dbc.Col(
             html.A(
-                html.I(className="bi bi-github ml-auto"), href="#soontm")
+                html.I(className="bi bi-github ml-auto"), href=REPO_URL)
             , width="auto"
         )
     ], 
