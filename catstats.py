@@ -29,7 +29,7 @@ def get_book_per_cat() -> float:
     book_value_per_cat = current_reserve / current_supply
     return book_value_per_cat
 
-def get_quit_plus_royalties():
+def get_quit_plus_royalties() -> float:
     tokens = [BLURETH_CONTRACT, WETH_CONTRACT]
     book = get_book_per_cat()
     current_supply = get_adjusted_total_supply()

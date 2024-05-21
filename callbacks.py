@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import plotly.express as px
+from database import engine
 from dash.dependencies import Input, Output
 from dash import Dash
 from catstats import *
@@ -64,13 +65,30 @@ def fetch_latest_txns_from_api(df):
     txns_df = txns_df.sort_values("blockNumber", ascending=True)
     return txns_df
 
+# def update_mint_chart():
+#     df = pd.read_csv("./historical_mints.csv")
+#     new_df = fetch_latest_txns_from_api(df)
+#     df = pd.concat([df, new_df], ignore_index=True)
+#     df = df.sort_values(by="blockNumber", ascending=True)
+#     df = df.reset_index(drop=True)
+#     df.to_csv("./historical_mints.csv", index=False)
+
+#     fig = px.line(df, x="blockNumber", y="value")
+#     fig.update_layout(
+#         paper_bgcolor="rgba(0,0,0,0)",
+#         plot_bgcolor="rgba(0,0,0,0)"
+#     )
+
+#     return fig
+
 def update_mint_chart():
-    df = pd.read_csv("./historical_mints.csv")
+    df = pd.read_sql("SELECT * FROM historical_mints", engine)
     new_df = fetch_latest_txns_from_api(df)
-    df = pd.concat([df, new_df], ignore_index=True)
-    df = df.sort_values(by="blockNumber", ascending=True)
-    df = df.reset_index(drop=True)
-    df.to_csv("./historical_mints.csv", index=False)
+    if new_df is not None:
+        df = pd.concat([df, new_df], ignore_index=True)
+        df = df.sort_values(by="blockNumber", ascending=True)
+        df = df.reset_index(drop=True)
+        df.to_sql("historical_mints", engine, if_exists="replace", index=False)
 
     fig = px.line(df, x="blockNumber", y="value")
     fig.update_layout(

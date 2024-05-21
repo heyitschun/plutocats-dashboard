@@ -10,8 +10,8 @@ header = html.Header([
         ),
         dbc.Col(
             html.A(
-                html.I(className="bi bi-github ml-auto"), href=REPO_URL)
-            , width="auto"
+                html.I(className="bi bi-github ml-auto"), href=REPO_URL
+            ), width="auto"
         )
     ],
     className="d-flex justify-content-between"

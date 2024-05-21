@@ -8,3 +8,4 @@ __pycache__/
 .DS_STORE
 .env
 notes.md
+.vscode
