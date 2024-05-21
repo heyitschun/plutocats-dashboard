@@ -71,7 +71,7 @@ app.layout = dbc.Container([
         n_intervals=0
     ),
 
-    historical_mints,
+    # historical_mints,
 
     html.Hr(),
 
