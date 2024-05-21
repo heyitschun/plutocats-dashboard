@@ -1,11 +1,12 @@
 from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
 
+import asyncio
+import atexit
+from sessions import session_manager
+
 import styles
-from catstats import *
-from helpers import *
-from contracts import *
-from constants import *
+from constants import DELAY
 from callbacks import register_callbacks
 from components.header import header
 from components.footer import footer
@@ -78,6 +79,7 @@ app.layout = dbc.Container([
 
 ], fluid=True)
 
-# Run the app
+
+atexit.register(lambda: asyncio.run(session_manager.close_session()))
 if __name__ == '__main__':
     app.run(debug=True)

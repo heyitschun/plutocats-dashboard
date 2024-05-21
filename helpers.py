@@ -1,4 +1,5 @@
 from web3 import Web3
+from web3.types import Timestamp, BlockData
 from client import client
 
 ###################
@@ -13,8 +14,8 @@ def to_eth(wei):
 
 def block_timestamp(): 
     block_number = client.eth.block_number
-    block = client.eth.get_block(block_number)
-    ts = block.timestamp
+    block: BlockData = client.eth.get_block(block_number)
+    ts: Timestamp = block.timestamp
     return ts
 
 ##############

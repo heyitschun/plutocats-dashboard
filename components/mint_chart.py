@@ -1,4 +1,4 @@
-from dash import dcc, callback, Input, Output
+from dash import dcc
 import plotly.express as px
 import pandas as pd
 
@@ -9,7 +9,6 @@ fig.update_layout(
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)"
 )
-
 
 historical_mints = dcc.Graph(
     figure=fig,

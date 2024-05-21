@@ -2,23 +2,24 @@ import requests
 import pandas as pd
 import plotly.express as px
 from dash.dependencies import Input, Output
+from dash import Dash
 from catstats import *
 from scraper import *
 from urls import parse_normal_transations_url
 
-def update_book_value():
+def update_book_value() -> str:
     book_value = get_book_per_cat()
     return format_to_eth_string(book_value)
 
-def update_book_royalties():
+def update_book_royalties() -> str:
     quit_plus = get_quit_plus_royalties()
     return format_to_eth_string(quit_plus)
 
-def update_mint_price():
+def update_mint_price() -> str:
     price_wei = get_price()
     return format_to_eth_string(price_wei)
 
-def update_current_reserves():
+def update_current_reserves() -> str:
     current_reserve = get_current_reserve()
     return format_to_eth_string(current_reserve)
 
@@ -51,7 +52,7 @@ def fetch_latest_txns_from_api(df):
     data = response.json()
     
     if data["result"] == None or data["result"] == []:
-        print("No transactions found")
+        print("No new transactions found")
         return None
     
     txns.extend(data["result"])
@@ -79,7 +80,7 @@ def update_mint_chart():
 
     return fig
 
-def register_callbacks(app):
+def register_callbacks(app: Dash) -> None:
     @app.callback(
         [
             Output("book-value-label", "children"),
@@ -94,7 +95,7 @@ def register_callbacks(app):
         ],
         [Input("combined-interval", "n_intervals")]
     )
-    def update_stat_elements(n):
+    def update_stat_elements(n) -> tuple:
         return (
             update_book_value(),
             update_book_royalties(),
