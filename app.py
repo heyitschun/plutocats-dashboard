@@ -1,10 +1,6 @@
 from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
 
-import asyncio
-import atexit
-from sessions import session_manager
-
 import styles
 from constants import DELAY
 from callbacks import register_callbacks
@@ -13,7 +9,6 @@ from components.footer import footer
 from components.mint_chart import historical_mints
 
 
-# Initialize the app - incorporate a Dash Bootstrap theme
 external_stylesheets = [dbc.themes.MORPH, dbc.icons.BOOTSTRAP]
 app = Dash(__name__, external_stylesheets=external_stylesheets)
 app.title = "Plutostats - A Plutocats Dashboard"
@@ -22,7 +17,6 @@ register_callbacks(app)
 
 server = app.server
 
-# App layout
 app.layout = dbc.Container([
     header,
 
@@ -79,7 +73,5 @@ app.layout = dbc.Container([
 
 ], fluid=True)
 
-
-atexit.register(lambda: asyncio.run(session_manager.close_session()))
 if __name__ == '__main__':
     app.run(debug=True)

@@ -53,7 +53,6 @@ def fetch_latest_txns_from_api(df):
     data = response.json()
     
     if data["result"] == None or data["result"] == []:
-        print("No new transactions found")
         return None
     
     txns.extend(data["result"])

@@ -18,6 +18,8 @@ BLAST_RPC_URLS = [
 START_BLOCK = 817948
 START_TIME = 1710445629
 
+BLAST_CHAIN_ID = 81457
+
 METHOD_IDS = {
     "0x70bce2d6": "takeAskSingle",
     "0xda815cb5": "takeBidSingle",
