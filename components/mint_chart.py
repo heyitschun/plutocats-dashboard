@@ -5,6 +5,14 @@ import pandas as pd
 df = pd.read_csv("./historical_mints.csv")
 
 fig = px.line(df, x="blockNumber", y="value")
+
+fig.add_shape(
+    type='line',
+    x0=df["blockNumber"].min(), x1=df["blockNumber"].max(),
+    y0=0.0, y1=0.0,
+    line=dict(color='snow', dash='longdash')
+)
+
 fig.update_layout(
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)"

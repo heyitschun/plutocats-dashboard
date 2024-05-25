@@ -90,6 +90,16 @@ def update_mint_chart():
         df.to_sql("historical_mints", engine, if_exists="replace", index=False)
 
     fig = px.line(df, x="blockNumber", y="value")
+
+    book = get_book_per_cat()
+    book = to_eth(book)
+    fig.add_shape(
+        type='line',
+        x0=df["blockNumber"].min(), x1=df["blockNumber"].max(),
+        y0=book, y1=book,
+        line=dict(color='snow', dash='longdash')
+    )
+
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)"
