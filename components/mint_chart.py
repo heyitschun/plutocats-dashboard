@@ -10,7 +10,7 @@ fig.add_shape(
     type='line',
     x0=df["blockNumber"].min(), x1=df["blockNumber"].max(),
     y0=0.0, y1=0.0,
-    line=dict(color='snow', dash='longdash')
+    line=dict(color='floralwhite', dash='dot')
 )
 
 fig.update_layout(

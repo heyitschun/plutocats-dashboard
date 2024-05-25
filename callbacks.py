@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 from database import engine
 from dash.dependencies import Input, Output
 from dash import Dash
@@ -97,12 +98,27 @@ def update_mint_chart():
         type='line',
         x0=df["blockNumber"].min(), x1=df["blockNumber"].max(),
         y0=book, y1=book,
-        line=dict(color='snow', dash='longdash')
+        line=dict(color='floralwhite', dash='dot')
     )
+
+    fig.add_trace(go.Scatter(
+        x=[None], y=[None],
+        mode='lines',
+        line=dict(color='floralwhite', dash='dot'),
+        showlegend=True,
+        name='Current quit price'
+    ))
 
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)"
+        plot_bgcolor="rgba(0,0,0,0)",
+            legend=dict(
+            yanchor="top",
+            y=-0.2,
+            xanchor="center",
+            x=0.5,
+            orientation="h"
+        )
     )
 
     return fig
