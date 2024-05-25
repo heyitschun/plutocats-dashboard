@@ -90,7 +90,19 @@ def update_mint_chart():
         df = df.reset_index(drop=True)
         df.to_sql("historical_mints", engine, if_exists="replace", index=False)
 
+    df['cumulativeSum'] = df['value'].expanding().sum()
+    df['cumulativeCount'] = df['value'].expanding().count()
+    df['cumulativeAverage'] = df['cumulativeSum'] / df['cumulativeCount']
+
     fig = px.line(df, x="blockNumber", y="value")
+
+    fig.add_trace(go.Scatter(
+        x=df["blockNumber"],
+        y=df["cumulativeAverage"],
+        mode='lines',
+        name='Quit price over time',
+        line=dict(color="#D8BCD9", dash="solid")
+    ))
 
     book = get_book_per_cat()
     book = to_eth(book)
@@ -98,13 +110,13 @@ def update_mint_chart():
         type='line',
         x0=df["blockNumber"].min(), x1=df["blockNumber"].max(),
         y0=book, y1=book,
-        line=dict(color='floralwhite', dash='dot')
+        line=dict(color='#D8BCD9', dash='dot')
     )
 
     fig.add_trace(go.Scatter(
         x=[None], y=[None],
         mode='lines',
-        line=dict(color='floralwhite', dash='dot'),
+        line=dict(color='#D8BCD9', dash='dot'),
         showlegend=True,
         name='Current quit price'
     ))
