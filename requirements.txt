@@ -28,6 +28,7 @@ eth-utils==4.1.1
 eth_abi==5.1.0
 Flask==3.0.3
 frozenlist==1.4.1
+greenlet==3.0.3
 gunicorn==22.0.0
 hexbytes==0.3.1
 idna==3.7
@@ -52,6 +53,7 @@ parsimonious==0.10.0
 pbr==6.0.0
 plotly==5.22.0
 protobuf==5.26.1
+psycopg2-binary==2.9.9
 pycryptodome==3.20.0
 Pygments==2.18.0
 python-dateutil==2.9.0.post0
@@ -68,6 +70,7 @@ rlp==4.0.1
 rpds-py==0.18.1
 six==1.16.0
 soupsieve==2.5
+SQLAlchemy==2.0.30
 stevedore==5.2.0
 tenacity==8.3.0
 tomli==2.0.1
